@@ -1,0 +1,20 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: echoserver
+  namespace: {{ .Chart.Name }}
+  {{- include "helm_lib_module_labels" (list . (dict "app" "echoserver")) | nindent 2 }}
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: echoserver
+            port:
+              number: 80

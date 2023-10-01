@@ -1,0 +1,8 @@
+project: echoserver
+configVersion: 1
+---
+{{ tpl (.Files.Get ".werf/stages/images.yaml") $ }}
+{{ tpl (.Files.Get ".werf/stages/images-digests.yaml") $ }}
+{{ tpl (.Files.Get ".werf/stages/python-deps.yaml") $ }}
+{{ tpl (.Files.Get ".werf/stages/bundle.yaml") $ }}
+{{ tpl (.Files.Get ".werf/stages/release.yaml") $ }}
