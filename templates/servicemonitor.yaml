@@ -1,0 +1,17 @@
+{{- if .Values.helloWorld.serviceMonitor.enabled -}}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    application.giantswarm.io/team: {{ .Values.helloWorld.serviceMonitor.team }}
+    app.kubernetes.io/instance: {{ .Values.helloWorld.serviceMonitor.instance }}
+  name: {{ include "hello-world.fullname" . }}
+spec:
+  endpoints:
+  - interval: 60s
+    path: /metrics
+    port: http
+  selector:
+    matchLabels:
+      {{- include "hello-world.labels" . | nindent 8 }}
+{{- end }}

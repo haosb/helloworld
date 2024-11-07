@@ -1,26 +1,79 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: echoserver
-  namespace: {{ .Chart.Name }}
-  {{- include "helm_lib_module_labels" (list . (dict "app" "echoserver")) | nindent 2 }}
+  name: {{ include "hello-world.fullname" . }}
+  labels:
+    {{- include "hello-world.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.echoserver.replicas }}
+  {{- if not .Values.helloWorld.autoscaling.enabled }}
+  replicas: {{ .Values.helloWorld.replicaCount }}
+  {{- end }}
+  {{- with .Values.helloWorld.strategy }}
+  strategy:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   selector:
     matchLabels:
-      app: echoserver
+      {{- include "hello-world.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      {{- with .Values.helloWorld.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       labels:
-        app: echoserver
+        {{- include "hello-world.labels" . | nindent 8 }}
+        {{- with .Values.helloWorld.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
+      {{- with .Values.helloWorld.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "hello-world.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.helloWorld.podSecurityContext | nindent 8 }}
       containers:
-        - image: {{ include "helm_lib_module_image" (list . "echoserver") }}
-          imagePullPolicy: IfNotPresent
-          name: echoserver
-          ports:
-            - containerPort: 80
-          env:
-            - name: PORT
-              value: "80"
+      - name: {{ .Chart.Name }}
+        securityContext:
+          {{- toYaml .Values.helloWorld.securityContext | nindent 10 }}
+        image: {{ include "helm_lib_module_image" (list . "helloWorld") }}
+        imagePullPolicy: {{ .Values.helloWorld.image.pullPolicy }}
+        ports:
+        - name: http
+          containerPort: 8080
+          protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: http
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: http
+        resources:
+          {{- toYaml .Values.helloWorld.resources | nindent 10 }}
+        {{- with .Values.helloWorld.volumeMounts }}
+        volumeMounts:
+          {{- toYaml . | nindent 12 }}
+        {{- end }}
+      {{- with .Values.helloWorld.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.helloWorld.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.helloWorld.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.helloWorld.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.helloWorld.topologySpreadConstraints }}
+      topologySpreadConstraints: {{ tpl (toYaml .) $ | nindent 8 }}
+      {{- end }}

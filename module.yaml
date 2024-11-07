@@ -1,4 +1,4 @@
-name: echoserver
+name: helloWorld
 stage: Sandbox
 weight: 960
 description: |

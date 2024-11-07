@@ -1,15 +1,22 @@
----
 apiVersion: v1
 kind: Service
 metadata:
-  name: echoserver
-  namespace: {{ .Chart.Name }}
-  {{- include "helm_lib_module_labels" (list . (dict "app" "echoserver")) | nindent 2 }}
+  name: {{ include "hello-world.fullname" . }}
+  labels:
+    {{- include "hello-world.labels" . | nindent 4 }}
+    {{- with .Values.helloWorld.service.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- with .Values.helloWorld.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
+  type: {{ .Values.helloWorld.service.type }}
   ports:
-    - port: 80
-      targetPort: 80
-      protocol: TCP
-  type: ClusterIP
+  - port: {{ .Values.helloWorld.service.port }}
+    targetPort: http
+    protocol: TCP
+    name: http
   selector:
-    app: echoserver
+    {{- include "hello-world.selectorLabels" . | nindent 4 }}
