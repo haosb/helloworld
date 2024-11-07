@@ -1,9 +1,9 @@
-{{- if .Values.helloWorld.ingress.enabled -}}
+{{- if .Values.helloworld.ingress.enabled -}}
 {{- $fullName := include "hello-world.fullname" . -}}
-{{- $svcPort := .Values.helloWorld.service.port -}}
-{{- if and .Values.helloWorld.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
-  {{- if not (hasKey .Values.helloWorld.ingress.annotations "kubernetes.io/ingress.class") }}
-  {{- $_ := set .Values.helloWorld.ingress.annotations "kubernetes.io/ingress.class" .Values.helloWorld.ingress.className}}
+{{- $svcPort := .Values.helloworld.service.port -}}
+{{- if and .Values.helloworld.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
+  {{- if not (hasKey .Values.helloworld.ingress.annotations "kubernetes.io/ingress.class") }}
+  {{- $_ := set .Values.helloworld.ingress.annotations "kubernetes.io/ingress.class" .Values.helloworld.ingress.className}}
   {{- end }}
 {{- end }}
 {{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
@@ -18,17 +18,17 @@ metadata:
   name: {{ $fullName }}
   labels:
     {{- include "hello-world.labels" . | nindent 4 }}
-  {{- with .Values.helloWorld.ingress.annotations }}
+  {{- with .Values.helloworld.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  {{- if and .Values.helloWorld.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
-  ingressClassName: {{ .Values.helloWorld.ingress.className }}
+  {{- if and .Values.helloworld.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
+  ingressClassName: {{ .Values.helloworld.ingress.className }}
   {{- end }}
-  {{- if .Values.helloWorld.ingress.tls }}
+  {{- if .Values.helloworld.ingress.tls }}
   tls:
-  {{- range .Values.helloWorld.ingress.tls }}
+  {{- range .Values.helloworld.ingress.tls }}
   - hosts:
     {{- range .hosts }}
     - {{ . | quote }}
@@ -37,7 +37,7 @@ spec:
   {{- end }}
   {{- end }}
   rules:
-  {{- range .Values.helloWorld.ingress.hosts }}
+  {{- range .Values.helloworld.ingress.hosts }}
   - host: {{ .host | quote }}
     http:
       paths:

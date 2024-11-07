@@ -4,17 +4,17 @@ metadata:
   name: {{ include "hello-world.fullname" . }}
   labels:
     {{- include "hello-world.labels" . | nindent 4 }}
-    {{- with .Values.helloWorld.service.labels }}
+    {{- with .Values.helloworld.service.labels }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
-  {{- with .Values.helloWorld.service.annotations }}
+  {{- with .Values.helloworld.service.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  type: {{ .Values.helloWorld.service.type }}
+  type: {{ .Values.helloworld.service.type }}
   ports:
-  - port: {{ .Values.helloWorld.service.port }}
+  - port: {{ .Values.helloworld.service.port }}
     targetPort: http
     protocol: TCP
     name: http

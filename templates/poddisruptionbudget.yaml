@@ -1,4 +1,4 @@
-{{- if .Values.helloWorld.podDisruptionBudget.enabled -}}
+{{- if .Values.helloworld.podDisruptionBudget.enabled -}}
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
@@ -6,10 +6,10 @@ metadata:
   labels:
     {{- include "hello-world.labels" . | nindent 4 }}
 spec:
-  {{- if .Values.helloWorld.podDisruptionBudget.minAvailable }}
-  minAvailable: {{ .Values.helloWorld.podDisruptionBudget.minAvailable }}
-  {{- else if .Values.helloWorld.podDisruptionBudget.maxUnavailable }}
-  maxUnavailable: {{ .Values.helloWorld.podDisruptionBudget.maxUnavailable }}
+  {{- if .Values.helloworld.podDisruptionBudget.minAvailable }}
+  minAvailable: {{ .Values.helloworld.podDisruptionBudget.minAvailable }}
+  {{- else if .Values.helloworld.podDisruptionBudget.maxUnavailable }}
+  maxUnavailable: {{ .Values.helloworld.podDisruptionBudget.maxUnavailable }}
   {{- end }}
   selector:
     matchLabels:

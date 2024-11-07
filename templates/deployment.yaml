@@ -5,10 +5,10 @@ metadata:
   labels:
     {{- include "hello-world.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.helloWorld.autoscaling.enabled }}
-  replicas: {{ .Values.helloWorld.replicaCount }}
+  {{- if not .Values.helloworld.autoscaling.enabled }}
+  replicas: {{ .Values.helloworld.replicaCount }}
   {{- end }}
-  {{- with .Values.helloWorld.strategy }}
+  {{- with .Values.helloworld.strategy }}
   strategy:
     {{- toYaml . | nindent 4 }}
   {{- end }}
@@ -17,29 +17,29 @@ spec:
       {{- include "hello-world.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.helloWorld.podAnnotations }}
+      {{- with .Values.helloworld.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
         {{- include "hello-world.labels" . | nindent 8 }}
-        {{- with .Values.helloWorld.podLabels }}
+        {{- with .Values.helloworld.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
-      {{- with .Values.helloWorld.imagePullSecrets }}
+      {{- with .Values.helloworld.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       serviceAccountName: {{ include "hello-world.serviceAccountName" . }}
       securityContext:
-        {{- toYaml .Values.helloWorld.podSecurityContext | nindent 8 }}
+        {{- toYaml .Values.helloworld.podSecurityContext | nindent 8 }}
       containers:
       - name: {{ .Chart.Name }}
         securityContext:
-          {{- toYaml .Values.helloWorld.securityContext | nindent 10 }}
-        image: {{ include "helm_lib_module_image" (list . "helloWorld") }}
-        imagePullPolicy: {{ .Values.helloWorld.image.pullPolicy }}
+          {{- toYaml .Values.helloworld.securityContext | nindent 10 }}
+        image: {{ include "helm_lib_module_image" (list . "helloworld") }}
+        imagePullPolicy: {{ .Values.helloworld.image.pullPolicy }}
         ports:
         - name: http
           containerPort: 8080
@@ -53,27 +53,27 @@ spec:
             path: /healthz
             port: http
         resources:
-          {{- toYaml .Values.helloWorld.resources | nindent 10 }}
-        {{- with .Values.helloWorld.volumeMounts }}
+          {{- toYaml .Values.helloworld.resources | nindent 10 }}
+        {{- with .Values.helloworld.volumeMounts }}
         volumeMounts:
           {{- toYaml . | nindent 12 }}
         {{- end }}
-      {{- with .Values.helloWorld.volumes }}
+      {{- with .Values.helloworld.volumes }}
       volumes:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.helloWorld.nodeSelector }}
+      {{- with .Values.helloworld.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.helloWorld.affinity }}
+      {{- with .Values.helloworld.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.helloWorld.tolerations }}
+      {{- with .Values.helloworld.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.helloWorld.topologySpreadConstraints }}
+      {{- with .Values.helloworld.topologySpreadConstraints }}
       topologySpreadConstraints: {{ tpl (toYaml .) $ | nindent 8 }}
       {{- end }}

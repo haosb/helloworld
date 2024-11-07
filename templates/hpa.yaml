@@ -1,4 +1,4 @@
-{{- if .Values.helloWorld.autoscaling.enabled }}
+{{- if .Values.helloworld.autoscaling.enabled }}
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
@@ -10,23 +10,23 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: {{ include "hello-world.fullname" . }}
-  minReplicas: {{ .Values.helloWorld.autoscaling.minReplicas }}
-  maxReplicas: {{ .Values.helloWorld.autoscaling.maxReplicas }}
+  minReplicas: {{ .Values.helloworld.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.helloworld.autoscaling.maxReplicas }}
   metrics:
-  {{- if .Values.helloWorld.autoscaling.targetCPUUtilizationPercentage }}
+  {{- if .Values.helloworld.autoscaling.targetCPUUtilizationPercentage }}
   - type: Resource
     resource:
       name: cpu
       target:
         type: Utilization
-        averageUtilization: {{ .Values.helloWorld.autoscaling.targetCPUUtilizationPercentage }}
+        averageUtilization: {{ .Values.helloworld.autoscaling.targetCPUUtilizationPercentage }}
   {{- end }}
-  {{- if .Values.helloWorld.autoscaling.targetMemoryUtilizationPercentage }}
+  {{- if .Values.helloworld.autoscaling.targetMemoryUtilizationPercentage }}
   - type: Resource
     resource:
       name: memory
       target:
         type: Utilization
-        averageUtilization: {{ .Values.helloWorld.autoscaling.targetMemoryUtilizationPercentage }}
+        averageUtilization: {{ .Values.helloworld.autoscaling.targetMemoryUtilizationPercentage }}
   {{- end }}
 {{- end }}

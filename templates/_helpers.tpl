@@ -2,7 +2,7 @@
 Expand the name of the chart.
 */}}
 {{- define "hello-world.name" -}}
-{{- default .Chart.Name .Values.helloWorld.nameOverride | trunc 63 | trimSuffix "-" }}
+{{- default .Chart.Name .Values.helloworld.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
@@ -11,10 +11,10 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 If release name contains chart name it will be used as a full name.
 */}}
 {{- define "hello-world.fullname" -}}
-{{- if .Values.helloWorld.fullnameOverride }}
-{{- .Values.helloWorld.fullnameOverride | trunc 63 | trimSuffix "-" }}
+{{- if .Values.helloworld.fullnameOverride }}
+{{- .Values.helloworld.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
-{{- $name := default .Chart.Name .Values.helloWorld.nameOverride }}
+{{- $name := default .Chart.Name .Values.helloworld.nameOverride }}
 {{- if contains $name .Release.Name }}
 {{- .Release.Name | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -56,9 +56,9 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Create the name of the service account to use
 */}}
 {{- define "hello-world.serviceAccountName" -}}
-{{- if .Values.helloWorld.serviceAccount.create }}
-{{- default (include "hello-world.fullname" .) .Values.helloWorld.serviceAccount.name }}
+{{- if .Values.helloworld.serviceAccount.create }}
+{{- default (include "hello-world.fullname" .) .Values.helloworld.serviceAccount.name }}
 {{- else }}
-{{- default "default" .Values.helloWorld.serviceAccount.name }}
+{{- default "default" .Values.helloworld.serviceAccount.name }}
 {{- end }}
 {{- end }}
