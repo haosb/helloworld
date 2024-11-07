@@ -106,7 +106,7 @@ tolerations: []
 
 affinity: {}
 
-topologySpreadConstraints: {}
+topologySpreadConstraints: []
 
 podDisruptionBudget:
   enabled: true
