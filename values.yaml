@@ -52,10 +52,10 @@ service:
 ingress:
   enabled: true
   className: nginx
-  annotations:
+  annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
-    cert-manager.io/cluster-issuer: letsencrypt-giantswarm
+    # cert-manager.io/cluster-issuer: letsencrypt-giantswarm
   hosts:
   - host: hello.cluster.provider.gigantic.io
     paths:
@@ -112,13 +112,6 @@ topologySpreadConstraints:
       app.kubernetes.io/name: '{{ include "hello-world.name" . }}'
       app.kubernetes.io/instance: '{{ .Release.Name }}'
   topologyKey: topology.kubernetes.io/zone
-  maxSkew: 1
-  whenUnsatisfiable: ScheduleAnyway
-- labelSelector:
-    matchLabels:
-      app.kubernetes.io/name: '{{ include "hello-world.name" . }}'
-      app.kubernetes.io/instance: '{{ .Release.Name }}'
-  topologyKey: kubernetes.io/hostname
   maxSkew: 1
   whenUnsatisfiable: ScheduleAnyway
 
