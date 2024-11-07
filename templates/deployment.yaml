@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "hello-world.fullname" . }}
+  name: {{ include "helloworld.fullname" . }}
   labels:
-    {{- include "hello-world.labels" . | nindent 4 }}
+    {{- include "helloworld.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.helloworld.autoscaling.enabled }}
   replicas: {{ .Values.helloworld.replicaCount }}
@@ -14,7 +14,7 @@ spec:
   {{- end }}
   selector:
     matchLabels:
-      {{- include "hello-world.selectorLabels" . | nindent 6 }}
+      {{- include "helloworld.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.helloworld.podAnnotations }}
@@ -22,7 +22,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "hello-world.labels" . | nindent 8 }}
+        {{- include "helloworld.labels" . | nindent 8 }}
         {{- with .Values.helloworld.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -31,7 +31,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "hello-world.serviceAccountName" . }}
+      serviceAccountName: {{ include "helloworld.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.helloworld.podSecurityContext | nindent 8 }}
       containers:
