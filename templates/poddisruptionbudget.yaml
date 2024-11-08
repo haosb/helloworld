@@ -2,9 +2,9 @@
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
-  name: {{ include "helloworld.fullname" . }}
+  name: {{ include "hello-world.fullname" . }}
   labels:
-    {{- include "helloworld.labels" . | nindent 4 }}
+    {{- include "hello-world.labels" . | nindent 4 }}
 spec:
   {{- if .Values.helloworld.podDisruptionBudget.minAvailable }}
   minAvailable: {{ .Values.helloworld.podDisruptionBudget.minAvailable }}
@@ -13,5 +13,5 @@ spec:
   {{- end }}
   selector:
     matchLabels:
-      {{- include "helloworld.selectorLabels" . | nindent 6 }}
+      {{- include "hello-world.selectorLabels" . | nindent 6 }}
 {{- end }}

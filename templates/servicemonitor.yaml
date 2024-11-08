@@ -5,7 +5,7 @@ metadata:
   labels:
     application.giantswarm.io/team: {{ .Values.helloworld.serviceMonitor.team }}
     app.kubernetes.io/instance: {{ .Values.helloworld.serviceMonitor.instance }}
-  name: {{ include "helloworld.fullname" . }}
+  name: {{ include "hello-world.fullname" . }}
 spec:
   endpoints:
   - interval: 60s
@@ -13,5 +13,5 @@ spec:
     port: http
   selector:
     matchLabels:
-      {{- include "helloworld.labels" . | nindent 8 }}
+      {{- include "hello-world.labels" . | nindent 8 }}
 {{- end }}
