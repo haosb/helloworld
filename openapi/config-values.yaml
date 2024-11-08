@@ -3,7 +3,8 @@
   "type": "object",
   "properties": {
     "affinity": {
-      "type": "object"
+      "type": "object",
+      "additionalProperties": true
     },
     "autoscaling": {
       "type": "object",
@@ -65,7 +66,8 @@
       "type": "object",
       "properties": {
         "annotations": {
-          "type": "object"
+          "type": "object",
+          "additionalProperties": true
         },
         "className": {
           "type": "string"
@@ -121,10 +123,12 @@
       "type": "string"
     },
     "nodeSelector": {
-      "type": "object"
+      "type": "object",
+      "additionalProperties": true
     },
     "podAnnotations": {
-      "type": "object"
+      "type": "object",
+      "additionalProperties": true
     },
     "podDisruptionBudget": {
       "type": "object",
@@ -141,10 +145,12 @@
       }
     },
     "podLabels": {
-      "type": "object"
+      "type": "object",
+      "additionalProperties": true
     },
     "podSecurityContext": {
-      "type": "object"
+      "type": "object",
+      "additionalProperties": true
     },
     "replicaCount": {
       "type": "integer"
@@ -216,10 +222,12 @@
       "type": "object",
       "properties": {
         "annotations": {
-          "type": "object"
+          "type": "object",
+          "additionalProperties": true
         },
         "labels": {
-          "type": "object"
+          "type": "object",
+          "additionalProperties": true
         },
         "port": {
           "type": "integer"
@@ -233,7 +241,8 @@
       "type": "object",
       "properties": {
         "annotations": {
-          "type": "object"
+          "type": "object",
+          "additionalProperties": true
         },
         "automount": {
           "type": "boolean"
@@ -285,7 +294,8 @@
     "topologySpreadConstraints": {
       "type": "array",
       "items": {
-        "type": "object"
+        "type": "object",
+        "additionalProperties": true
       }
     },
     "volumeMounts": {
